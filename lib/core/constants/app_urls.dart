@@ -1,5 +1,5 @@
 class AppURLS {
 
-  static const website = "https://www.google.com";
+  static const newsAPIBaseURL = "https://newsapi.org/v2";
 
 }

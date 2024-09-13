@@ -62,13 +62,17 @@ dependencies:
   floor: ^1.4.2
 
   #Make api requests
-  retrofit: ^3.0.1
+  retrofit: ^4.4.1
+  logger: ^2.4.0  # for logging purpose
+  json_annotation: ^4.9.0
 
   #hooks
   flutter_hooks: ^0.18.3
 
   #cached image
   cached_network_image: ^3.2.0
+
+  dio: ^5.7.0
 
 
 
@@ -82,9 +86,10 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
-  retrofit_generator: 3.0.1+1
-  floor_generator: 1.2.0
-  build_runner: 2.1.2
+  floor_generator: 1.5.0
+  retrofit_generator: ^9.0.0 # for Dart 3.3 use ^9.0.0
+  build_runner: ^2.3.3
+  json_serializable: ^6.8.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
