@@ -10,6 +10,10 @@ class AppTheme {
     scaffoldBackgroundColor: AppColours.lightBackground,
     brightness: Brightness.light,
     fontFamily: "Satoshi",
+    appBarTheme: const AppBarTheme(
+      centerTitle: false,
+      titleTextStyle: TextStyle(fontSize: 18)
+    ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: Colors.transparent,
@@ -57,6 +61,10 @@ class AppTheme {
     scaffoldBackgroundColor: AppColours.darkBackground,
     brightness: Brightness.dark,
     fontFamily: "Satoshi",
+    appBarTheme: const AppBarTheme(
+        centerTitle: false,
+        titleTextStyle: TextStyle(fontSize: 18)
+    ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: Colors.transparent,
