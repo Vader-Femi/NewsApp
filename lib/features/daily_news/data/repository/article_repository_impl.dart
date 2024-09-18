@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:myapplication/core/constants/constants.dart';
 import 'package:myapplication/core/res/data_state.dart';
 import 'package:myapplication/features/daily_news/data/models/article.dart';
@@ -22,19 +22,27 @@ class ArticleRepositoryImpl implements ArticleRepository{
           category: Constants.categoryQuery
       );
 
+
+
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {
+        if (kDebugMode) {
+          print(httpResponse);
+        }
         return DataFailed(
             DioException(
               requestOptions: httpResponse.response.requestOptions,
               response: httpResponse.response,
-              error: httpResponse.response.statusCode,
+              error: "${httpResponse.response.statusCode}: ${httpResponse.response.statusMessage}",
               message: httpResponse.response.statusMessage,
             )
         );
       }
     } on DioException catch (e){
+      if (kDebugMode) {
+        print(e);
+      }
       return DataFailed(e);
     }
   }

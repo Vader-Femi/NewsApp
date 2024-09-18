@@ -25,7 +25,8 @@ class DailyNews extends StatelessWidget {
 
   _buildBody() {
     return BlocProvider<RemoteArticleBloc>(
-      create: (_) => RemoteArticleBloc(sl())..add(GetArticles()),//sl()..add(const GetArticles()),
+      create: (_) => RemoteArticleBloc(sl())
+        ..add(const GetArticles()), //sl()..add(const GetArticles()),
       child: BlocBuilder<RemoteArticleBloc, RemoteArticleState>(
           builder: (_, state) {
         if (state is RemoteArticlesLoading) {
@@ -33,25 +34,47 @@ class DailyNews extends StatelessWidget {
             child: CupertinoActivityIndicator(),
           );
         }
-      
+
         if (state is RemoteArticlesError) {
-          return const Center(
-            child: Icon(Icons.refresh_outlined),
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text("${state.error?.message}"),
+                  const SizedBox(height: 10),
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)
+                    )),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text("Refresh"),
+                        Icon(Icons.refresh_outlined),
+                      ],
+                    ),
+                    onPressed: () =>
+                        RemoteArticleBloc(sl())..add(const GetArticles()),
+                  ),
+                ],
+              ),
+            ),
           );
         }
-      
+
         if (state is RemoteArticlesDone) {
           return ListView.builder(
-            itemBuilder: (context, index){
-                return ListTile(
-                  title: Text("$index"),
-                );
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text("$index"),
+              );
             },
             itemCount: state.articles!.length,
-      
           );
         }
-      
+
         return const SizedBox();
       }),
     );
