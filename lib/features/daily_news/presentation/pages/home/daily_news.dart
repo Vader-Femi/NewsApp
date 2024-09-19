@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:myapplication/features/daily_news/presentation/bloc/atricle/remote/remote_article_bloc.dart';
-import 'package:myapplication/features/daily_news/presentation/bloc/atricle/remote/remote_article_event.dart';
-import 'package:myapplication/features/daily_news/presentation/bloc/atricle/remote/remote_article_state.dart';
-import 'package:myapplication/service_locator.dart';
+import '../../../../../service_locator.dart';
+import '../../../presentation/bloc/article/remote/remote_article_bloc.dart';
+import '../../../presentation/bloc/article/remote/remote_article_event.dart';
+import '../../../presentation/bloc/article/remote/remote_article_state.dart';
+import '../../../domain/entities/article.dart';
+import '../../widgets/article_tile.dart';
 
 class DailyNews extends StatelessWidget {
   const DailyNews({super.key});
@@ -12,14 +14,23 @@ class DailyNews extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppbar(),
+      appBar: _buildAppbar(context),
       body: _buildBody(),
     );
   }
 
-  _buildAppbar() {
+  _buildAppbar(BuildContext context) {
     return AppBar(
       title: const Text("Daily News"),
+      actions: [
+        GestureDetector(
+          onTap: () => _onShowSavedArticlesViewTapped(context),
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 14),
+            child: Icon(Icons.bookmark),
+          ),
+        ),
+      ],
     );
   }
 
@@ -67,16 +78,25 @@ class DailyNews extends StatelessWidget {
         if (state is RemoteArticlesDone) {
           return ListView.builder(
             itemBuilder: (context, index) {
-              return ListTile(
-                title: Text("$index"),
+              return ArticleWidget(
+                article: state.articles?[index] ,
+                onArticlePressed: (article) => _onArticlePressed(context,article),
               );
             },
-            itemCount: state.articles!.length,
+            itemCount: state.articles?.length ?? 0,
           );
         }
 
         return const SizedBox();
       }),
     );
+  }
+
+  void _onArticlePressed(BuildContext context, ArticleEntity article) {
+    Navigator.pushNamed(context, '/ArticleDetails', arguments: article);
+  }
+
+  void _onShowSavedArticlesViewTapped(BuildContext context) {
+    Navigator.pushNamed(context, '/SavedArticles');
   }
 }

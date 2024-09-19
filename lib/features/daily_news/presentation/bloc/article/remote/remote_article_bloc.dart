@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapplication/core/res/data_state.dart';
 import 'package:myapplication/features/daily_news/domain/usecases/get_article.dart';
-import 'package:myapplication/features/daily_news/presentation/bloc/atricle/remote/remote_article_event.dart';
-import 'package:myapplication/features/daily_news/presentation/bloc/atricle/remote/remote_article_state.dart';
+import '../../../bloc/article/remote/remote_article_event.dart';
+import '../../../bloc/article/remote/remote_article_state.dart';
 
 class RemoteArticleBloc extends Bloc<RemoteArticlesEvent, RemoteArticleState> {
 

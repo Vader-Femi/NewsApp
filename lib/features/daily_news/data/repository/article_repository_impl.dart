@@ -22,13 +22,11 @@ class ArticleRepositoryImpl implements ArticleRepository{
           category: Constants.categoryQuery
       );
 
-
-
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {
         if (kDebugMode) {
-          print(httpResponse);
+          print(httpResponse.response);
         }
         return DataFailed(
             DioException(
