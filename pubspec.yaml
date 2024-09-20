@@ -59,7 +59,7 @@ dependencies:
   intl: ^0.18.1
 
   #Datebase
-  floor: ^1.4.2
+  floor: ^1.5.0
 
   #Make api requests
   retrofit: ^4.4.1
