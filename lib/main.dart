@@ -13,6 +13,7 @@ import 'package:myapplication/service_locator.dart';
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
+
   HydratedBloc.storage = await HydratedStorage.build(
       storageDirectory: kIsWeb
           ? HydratedStorage.webStorageDirectory
