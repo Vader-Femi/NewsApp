@@ -72,6 +72,8 @@ class _$AppDatabase extends AppDatabase {
     changeListener = listener ?? StreamController<String>.broadcast();
   }
 
+  ArticleDAO? _articleDAOInstance;
+
   Future<sqflite.Database> open(
     String path,
     List<Migration> migrations, [
@@ -100,5 +102,79 @@ class _$AppDatabase extends AppDatabase {
       },
     );
     return sqfliteDatabaseFactory.openDatabase(path, options: databaseOptions);
+  }
+
+  @override
+  ArticleDAO get articleDAO {
+    return _articleDAOInstance ??= _$ArticleDAO(database, changeListener);
+  }
+}
+
+class _$ArticleDAO extends ArticleDAO {
+  _$ArticleDAO(
+    this.database,
+    this.changeListener,
+  )   : _queryAdapter = QueryAdapter(database),
+        _articleModelInsertionAdapter = InsertionAdapter(
+            database,
+            'articles',
+            (ArticleModel item) => <String, Object?>{
+                  'id': item.id,
+                  'author': item.author,
+                  'title': item.title,
+                  'description': item.description,
+                  'url': item.url,
+                  'urlToImage': item.urlToImage,
+                  'publishedAt': item.publishedAt,
+                  'content': item.content
+                }),
+        _articleModelDeletionAdapter = DeletionAdapter(
+            database,
+            'articles',
+            ['id'],
+            (ArticleModel item) => <String, Object?>{
+                  'id': item.id,
+                  'author': item.author,
+                  'title': item.title,
+                  'description': item.description,
+                  'url': item.url,
+                  'urlToImage': item.urlToImage,
+                  'publishedAt': item.publishedAt,
+                  'content': item.content
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<ArticleModel> _articleModelInsertionAdapter;
+
+  final DeletionAdapter<ArticleModel> _articleModelDeletionAdapter;
+
+  @override
+  Future<List<ArticleModel>> getArticle() async {
+    return _queryAdapter.queryList('SELECT * FROM article',
+        mapper: (Map<String, Object?> row) => ArticleModel(
+            id: row['id'] as int?,
+            author: row['author'] as String?,
+            title: row['title'] as String?,
+            description: row['description'] as String?,
+            url: row['url'] as String?,
+            urlToImage: row['urlToImage'] as String?,
+            publishedAt: row['publishedAt'] as String?,
+            content: row['content'] as String?));
+  }
+
+  @override
+  Future<void> insertArticle(ArticleModel article) async {
+    await _articleModelInsertionAdapter.insert(
+        article, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> deleteArticle(ArticleModel article) async {
+    await _articleModelDeletionAdapter.delete(article);
   }
 }
