@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:myapplication/features/daily_news/domain/usecases/get_saved_article.dart';
+import 'package:myapplication/features/daily_news/domain/usecases/remove_article.dart';
+import 'package:myapplication/features/daily_news/domain/usecases/save_article.dart';
 import 'features/daily_news/data/repository/article_repository_impl.dart';
 import 'features/daily_news/data/sources/local/app_database.dart';
 import 'features/daily_news/data/sources/remote/news_api_service.dart';
@@ -26,11 +29,24 @@ Future<void> initializeDependencies() async {
   );
 
   sl.registerSingleton<ArticleRepository>(
-      ArticleRepositoryImpl(sl())
+      ArticleRepositoryImpl(sl(), sl())
   );
 
+  //UseCases
   sl.registerSingleton<GetArticleUseCase>(
       GetArticleUseCase(sl())
+  );
+
+  sl.registerSingleton<GetSavedArticleUseCase>(
+      GetSavedArticleUseCase(sl())
+  );
+
+  sl.registerSingleton<SaveArticleUseCase>(
+      SaveArticleUseCase(sl())
+  );
+
+  sl.registerSingleton<RemoveArticleUseCase>(
+      RemoveArticleUseCase(sl())
   );
 
   //Blocs
