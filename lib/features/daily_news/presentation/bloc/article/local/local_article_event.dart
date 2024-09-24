@@ -6,6 +6,4 @@ abstract class LocalArticleEvents extends Equatable {
 
   const LocalArticleEvents({this.articleEntity});
 
-
-
 }
