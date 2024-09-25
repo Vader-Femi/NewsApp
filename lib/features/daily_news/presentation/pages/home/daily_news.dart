@@ -22,6 +22,7 @@ class DailyNews extends StatelessWidget {
   _buildAppbar(BuildContext context) {
     return AppBar(
       title: const Text("Daily News"),
+      automaticallyImplyLeading: false,
       actions: [
         GestureDetector(
           onTap: () => _onShowSavedArticlesViewTapped(context),

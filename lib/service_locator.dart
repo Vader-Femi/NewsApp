@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:myapplication/features/daily_news/domain/usecases/get_saved_article.dart';
 import 'package:myapplication/features/daily_news/domain/usecases/remove_article.dart';
 import 'package:myapplication/features/daily_news/domain/usecases/save_article.dart';
+import 'package:myapplication/features/daily_news/presentation/bloc/article/local/local_article_bloc.dart';
 import 'features/daily_news/data/repository/article_repository_impl.dart';
 import 'features/daily_news/data/sources/local/app_database.dart';
 import 'features/daily_news/data/sources/remote/news_api_service.dart';
@@ -52,6 +53,10 @@ Future<void> initializeDependencies() async {
   //Blocs
   sl.registerFactory<RemoteArticleBloc>(
       () => RemoteArticleBloc(sl())
+  );
+
+  sl.registerFactory<LocalArticleBloc>(
+      () => LocalArticleBloc(sl(), sl(), sl())
   );
 
 }

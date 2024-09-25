@@ -96,7 +96,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `articles` (`id` INTEGER, `author` TEXT, `title` TEXT, `description` TEXT, `url` TEXT, `urlToImage` TEXT, `publishedAt` TEXT, `content` TEXT, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `article` (`id` INTEGER, `author` TEXT, `title` TEXT, `description` TEXT, `url` TEXT, `urlToImage` TEXT, `publishedAt` TEXT, `content` TEXT, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -117,7 +117,7 @@ class _$ArticleDAO extends ArticleDAO {
   )   : _queryAdapter = QueryAdapter(database),
         _articleModelInsertionAdapter = InsertionAdapter(
             database,
-            'articles',
+            'article',
             (ArticleModel item) => <String, Object?>{
                   'id': item.id,
                   'author': item.author,
@@ -130,7 +130,7 @@ class _$ArticleDAO extends ArticleDAO {
                 }),
         _articleModelDeletionAdapter = DeletionAdapter(
             database,
-            'articles',
+            'article',
             ['id'],
             (ArticleModel item) => <String, Object?>{
                   'id': item.id,

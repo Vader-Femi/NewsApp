@@ -9,6 +9,8 @@ import 'package:myapplication/features/splash/presentation/pages/splash.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:myapplication/service_locator.dart';
 
+import 'configs/routes/AppRoutes.dart';
+
 
 void main() async {
 
@@ -39,6 +41,7 @@ class MyApp extends StatelessWidget {
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: mode,
+          onGenerateRoute: AppRoutes.onGenerateRoutes,
           home: const SplashPage(),
         ),
       ),
